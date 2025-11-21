@@ -13,7 +13,16 @@ const Header = () => {
     // Function to sign out of account added here later
     const handleSignOut = async () => {
        try {
-        // send POST request to API for sign out
+        const response = await fetch('/api/users/signout', {
+            method: 'POST',
+            headers: { 'Conetnt-type': 'application/json'}
+        })
+
+        const result = await response.json();
+
+        if (response.ok) {
+            //Redirect to landing page
+        }
        } catch (err) {
         console.error('Network or server-side error: ', err); 
        }
