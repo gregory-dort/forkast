@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Header, Footer, Modal, SignInForm, SignUpForm, Schedule, MealList } from '../components';
+import { Header, Footer } from '../components';
+import { Hero, ScheduleCard, MealList } from '../pages';
 
 const Home = () => {
     
     return (
-        <div>
+        <div className = "bg-gray-700">
             <Header />
-            <main className = "bg-gradient-to-br from-yellow-100 to-orange-300 min-h-screen flex items-center mt-24">
-                <Schedule />
+            <Hero />
+            <main className = "bg-gray-700 min-h-screen flex flex-row md:flex-col items-center mt-16 md:mt-24">
+                <ScheduleCard />
                 <MealList />
             </main>
             <Footer />

@@ -20,10 +20,10 @@ const Header = () => {
     }
 
     return (
-        <div className = "fixed top-0 bg-gray-100/50 w-full flex flex-row shadow-md justify-between items-center p-2 z-50">
+        <div className = "fixed top-0 bg-gradient-to-r from-orange-300 to-emerald-200/80 bg-blend-saturation w-full flex flex-row shadow-md justify-between items-center p-2 z-50">
             {/* Left Side of Navbar */}
             <div className = "w-1/3 flex justify-start items-center">
-                <h1 className = "text-xl text-gray-800">Welcome to PrepTime!</h1>
+                <h1 className = "text-xl text-black">Welcome to PrepTime!</h1>
             </div>
 
             {/* Center of Navbar */}
@@ -36,11 +36,11 @@ const Header = () => {
                 {/* Needs conditional rendering later on. Currently adding all buttons needed to the Navbar and will fix later*/}
                  <button
                     onClick = {handleModal}
-                    className = "text-black px-4 py-2 font-medium rounded-md bg-orange-100 hover:scale-110 hover:border-2 transition ease-in-out duration-900"
-                >Sign In / Sign Up</button>
+                    className = "text-black px-4 py-2 font-medium rounded-md bg-white hover:scale-110 transition ease-in-out duration-900"
+                >Sign Up</button>
                 <button
                     onClick = {handleSignOut}
-                    className = "text-black px-4 py-2 font-medium rounded-md bg-amber-100 hover:scale-110 hover:border-2 transition ease-in-out duration-900"
+                    className = "text-black px-4 py-2 font-medium rounded-md bg-white hover:scale-110 transition ease-in-out duration-900"
                 >Sign Out</button>
             </div>
         </div>

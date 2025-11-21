@@ -1,4 +1,4 @@
-const Schedule = () => {
+const Meals = () => {
 
     return (
         <div>
@@ -7,4 +7,4 @@ const Schedule = () => {
     );
 }
 
-export default Schedule;
+export default Meals;
