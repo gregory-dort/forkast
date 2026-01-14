@@ -4,6 +4,7 @@ import SignInForm from './Signin';
 import SignUpForm from './Signup';
 import SectionCard from './SectionCard';
 import Modal from './Modal';
+import SideNavbar from './SideNavbar';
 
 export {
     Header,
@@ -11,5 +12,6 @@ export {
     SignInForm,
     SignUpForm,
     SectionCard,
-    Modal
+    Modal,
+    SideNavbar
 };
