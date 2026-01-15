@@ -29,7 +29,7 @@ const Header = () => {
     }
 
     return (
-        <div className = "fixed top-0 bg-[#f7879a] w-full flex flex-row shadow-md justify-center items-center p-2 z-50">
+        <div className = "fixed top-0 bg-gradient-to-r from-[#FDA4BA] to-[#F7879A] w-full flex flex-row shadow-lg justify-center items-center p-2 z-50">
             {/* Left of Navbar */}
             <div className = "flex-none w-1/2 flex justify-start items-center">
                 <img src="/images/preptime-logo.png" alt="PrepTime Logo" className = "h-20 w-auto max-w-full"/>
@@ -40,11 +40,11 @@ const Header = () => {
                 {/* Needs conditional rendering later on. Currently adding all buttons needed to the Navbar and will fix later*/}
                  <button
                     onClick = {handleModal}
-                    className = "text-black px-4 py-2 font-medium rounded-md bg-white shadow-md"
+                    className = "text-black px-4 py-2 font-medium rounded-md bg-[#FFFFF0] shadow-md"
                 >Sign Up</button>
                 <button
                     onClick = {handleSignOut}
-                    className = "text-black px-4 py-2 font-medium rounded-md bg-white shadow-md"
+                    className = "text-black px-4 py-2 font-medium rounded-md bg-[#FFFFF0] shadow-md"
                 >Sign Out</button>
             </div>
         </div>

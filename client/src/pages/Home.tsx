@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Header, Footer, SideNavbar } from '../components';
-import { Hero, ScheduleCard, MealList } from '../pages';
+import { Hero, ScheduleCard } from '../pages';
 
 const Home = () => {
-    
+    const { isAuthenticated } = useAuth();
+
     return (
         <div className = "bg-[#cbd5c0]">
-            
             <Header />
-            <Hero />
-            <main className = "min-h-screen flex flex-row md:flex-col items-center mt-16 md:mt-24">
+            {isAuthenticated && <SideNavbar />}
+            <main className = {isAuthenticated ? "ml-64" : "ml-0"}>
+                <Hero />
                 <ScheduleCard />
-                <MealList />
             </main>
             <Footer />
         </div>
