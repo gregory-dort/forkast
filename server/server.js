@@ -18,7 +18,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(bodyParser.json());
 
 // API Routes
@@ -27,9 +30,9 @@ app.use("/api/users", userRoutes);
 
 // Test to see if server is running
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "PrepTime is running!" });
+  res.status(200).json({ message: "Forkast is running!" });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Forkast is running on http://localhost:${PORT}`);
 });
