@@ -87,7 +87,7 @@ module.exports = (supabase) => {
     }
   });
 
-  router.delete('/delete-meal', verifyAuth, async(req, res) => {
+  router.delete('/delete-meal/:id', verifyAuth, async(req, res) => {
     /*
         This route handles deleting a meal from a user's collection. It validates the user is logged in prior to deleting the meal from the database. mealValidators are used to validate the meal information before it is successfully deleted from the database.
 
@@ -95,6 +95,26 @@ module.exports = (supabase) => {
     */
 
     try {
+      const userID = req.user.id;
+      const mealID = req.params.id;
+
+      const { data, error } = await supabase
+      .from('meals')
+      .delete()
+      .eq('id', mealID)
+      .eq('user_id', userID)
+      .select();
+
+      if (error) {
+      console.error('Database error deleting meal', error);
+      return res.status(500).json({ success: false, error: 'Unable to delete meal. Please try again.' });
+      }
+
+      if (data.length === 0) {
+        return res.status(404).json({ success: false, error: 'Meal not found' });
+      }
+
+      return res.status(200).json({ success: true, message: 'Meal deleted successfully.', meal: data });
 
     } catch (error) {
       console.error('Error deleting meal', error);
