@@ -8,7 +8,7 @@ module.exports = (supabase) => {
 
   The routes are as follows: 
   add-meal (POST): Adds a new meal to a users collection
-  delete-meal (DELETE): deletes a meal within a users collection
+  delete-meal/:id (DELETE): deletes a meal within a users collection by searching for it by its mealID
   update-meal (PUT): updates the information for a meal within a users collection
   get-meal (GET): requests the information for one meal in a users collection
   all-meals (GET): requests the information for all meals in a users collection
@@ -79,11 +79,11 @@ module.exports = (supabase) => {
         return res.status(500).json({ success: false, error: 'Unable to create meal. Please try again.' });
       }
 
-      res.status(201).json({ success: true, message: 'Meal added successfully' });
+      res.status(201).json({ success: true, message: 'Meal added successfully', meal: data });
 
     } catch (error) {
       console.error('Error adding meal', error);
-      res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
+      return res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
     }
   });
 
@@ -118,16 +118,142 @@ module.exports = (supabase) => {
 
     } catch (error) {
       console.error('Error deleting meal', error);
-      res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
+      return res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
     }
   });
 
-  router.put('/update-meal', verifyAuth, async(req, res) => {
-    console.log("Updated a meal");
+  router.put('/update-meal/:id', verifyAuth, async(req, res) => {
+    /*
+      This route handles the logic to update a meal's information within a user's collection. It validates the user is logged in and that the meal exists prior to updating the meal information in the database. mealValidators are used to validate the updated information before it is successfully updated in the database.
+
+      If there is an issue which updating the meal an error is returned with a message describing the issue. If the meal is updated successfully a success message is returned instead.
+
+      This route allows partial updates so the user can send any combination of meal information they would like to update and only that information will be updated. 
+      Ex: Updating meal name and prep time only vs. updating entire meal information.
+    */
+    try {
+      const userID = req.user.id;
+      const mealID = req.params.id;
+      const { name, ingredients, servings, instructions, prep_time_minutes, category } = req.body;
+
+      const updatedInformation = {};
+
+      if (name !== undefined) {
+        const validation = validateName(name);
+        
+        if (!validation.valid) { 
+          return res.status(400).json({ success: false, error: nameValidation.error });
+        }
+        updatedInformation.name = validation.value;
+      }
+      
+      if (ingredients !== undefined) {
+        const validation = validateIngredients(ingredients);
+
+        if (!validation.valid) {
+          return res.status(400).json({ success: false, error: validation.error });
+        }
+        updatedInformation.ingredients = validation.value;
+      }
+
+      if (servings !== unddefined) {
+        const validation = validateServings(servings);
+
+        if (!validation.valid) {
+          return res.status(400).json({ success: false, error: validation.error });
+        }
+        updatedInformation.servings = validation.value;
+      }
+      
+      if (instructions !== undefined) {
+        const validation = validateInstructions(instructions);
+
+        if (!validation.valid) {
+          return res.status(400).json({ success: false, error: validation.error });
+        }
+        updatedInformation.instructions = validation.value;
+      }
+      
+      if (prep_time_minutes !== undefined) {
+        const validation = validatePrepTime(prep_time_minutes);
+
+        if (!validation.valid) {
+          return res.status(400).json({ success: false, error: validation.error });
+        }
+        updatedInformation.prep_time_minutes = validation.value;
+      }
+      
+      if (category !== undefined) {
+        const validation = validateCategory(category);
+        
+        if (!validation.valid) {
+          return res.status(400).json({ success: false, error: validation.error });
+        }
+        updatedInformation.category = validation.value;
+      }
+
+      if (Object.keys(updatedInformation).length === 0) {
+        return res.status(400).json({ success: false, error: 'No information provided to update' });
+      }
+
+      const { data, error } = await supabase
+        .from('meals')
+        .eq('id', mealID)
+        .eq('user_id', userID)
+        .update(updatedInformation)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Database error updating meal', error);
+        return res.status(500).json({ success: false, error: 'Unable to update meal. Please try again.' });
+      }
+
+      if (!data) {
+        return res.status(404).json({ success: false, error: 'Meal not found' });
+      }
+
+      return res.status(200).json({ success: true, message: 'Meal updated successfully', meal: data });
+
+    } catch (error) {
+      console.error('Error updating meal', error);
+      return res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
+    }
   });
 
-  router.get('/get-meal', verifyAuth, async(req, res) => {
-    console.log("Retrieved a meal");
+  router.get('/get-meal/:id', verifyAuth, async(req, res) => {
+    /*
+      This route handles retrieving a single meal from a user's collection by its id. It validates the user is logged in prior to retrieving the meal information from the database.
+
+      If there is an issue with retrieving the meal information an error is returned with a message decribing the issue. If the meal is retrieved successfully a success message is returned along with the meal information instead.
+    */
+
+    try {
+      const userID = req.user.id;
+      const mealID = req.params.id;
+
+      const { data, error } = await supabase
+        .from('meals')
+        .eq('id', mealID)
+        .eq('user_id', userID)
+        .select()
+        .single();
+      
+      if (error) {
+        console.error('Database error retrieving meal', error);
+        return res.status(500).json({ success: false, error: 'Unable to retrieve meal. Please try again.' });
+      }
+
+      if (!data) {
+        return res.status(404).json({ success: false, error: 'Meal not found.' });
+      }
+
+      return res.status(200).json({ success: true, meal: data });
+
+    } catch (error) {
+      console.error('Error retrieving meal', error);
+      return res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
+    }
   })
 
   router.get('/all-meals', verifyAuth, async(req, res) => {
@@ -149,7 +275,7 @@ module.exports = (supabase) => {
 
     } catch (error) {
       console.error('Error retrieving meals', error);
-      res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
+      return res.status(500).json({ success: false, error: 'An unexpected error occurred. Please try again.' });
     }
   });
 
