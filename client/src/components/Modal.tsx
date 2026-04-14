@@ -13,7 +13,7 @@ const Modal = ({ showModal, onClose, children }: ModalProps) => {
             <div className = "relative bg-white p-8 w-96 max-w-lg rounded-lg shadow-xl">
                 <button
                     onClick={onClose}
-                    className="absolute top-2 right-2 border-gradient-to-r from-yellow-100-orange-400 bg-white hover:bg-gradient-to-br from-yellow-100-to-orange-400 transition duration-300 px-4 py-2 font-medium text-gray-400 rounded-full">
+                    className="absolute top-2 right-2 bg-white hover:bg-gradient-to-br hover:from-yellow-100 hover:to-orange-400 transition duration-300 px-4 py-2 font-medium text-gray-400 rounded-full">
                         &times;
                 </button>
                 {children}
