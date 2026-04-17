@@ -6,6 +6,7 @@ export interface AppUser {
 
 export interface AuthContextType {
     user: AppUser | null;
+    name: string;
     isAuthenticated: boolean;
     isLoading: boolean;
     error: string | null;

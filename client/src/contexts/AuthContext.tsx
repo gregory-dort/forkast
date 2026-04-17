@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             setUser({
                 id: session.user.id,
                 email: session.user.email || '',
+                name: session.user.user_metadata?.name || ''
             });
             } else {
             setUser(null);
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUser({
             id: session.user.id,
             email: session.user.email || '',
+            name: session.user.user_metadata.name || ''
           });
         } else {
           setUser(null);

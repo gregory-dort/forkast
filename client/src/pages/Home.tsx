@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Header, Footer, SideNavbar, Hero } from '../components';
-import { ScheduleCard } from '../pages';
-import MealCard from './MealCard';
+import { Hero } from '../components';
+import { ScheduleCard, MealCard } from '../pages';
 
 const Home = () => {
     const { isAuthenticated } = useAuth();
+    const scheduleRef = useRef<HTMLDivElement>(null);
+
+    const scrollToSchedule = () => {
+        scheduleRef.current?.scrollIntoView({ behavior: 'smooth'});
+    }
 
     return (
         <div className = "bg-cream min-h-screen">
-            <Hero />
-            <main className={isAuthenticated ? 'ml-64' : 'ml-0'}>
+            <Hero scrollToSchedule={scrollToSchedule} />
+            <main ref={scheduleRef}>
                 <ScheduleCard />
                 <MealCard />
             </main>

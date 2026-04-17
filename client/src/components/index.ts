@@ -6,6 +6,7 @@ import SideNavbar from './SideNavbar';
 import Schedule from './Schedule';
 import Meals from './Meals';
 import Hero from './Hero';
+import LandingHero from './LandingHero';
 
 export {
     Header,
@@ -15,5 +16,6 @@ export {
     SideNavbar,
     Schedule,
     Meals,
-    Hero
+    Hero,
+    LandingHero
 };

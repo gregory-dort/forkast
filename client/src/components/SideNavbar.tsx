@@ -54,23 +54,25 @@ const SideNavbar = ({ isOpen, setIsOpen }: SideNavbarProps) => {
         <div ref={sidebarRef} className={`fixed left-0 h-screen shadow-md p-2 z-50 bg-mint mt-4 transition-all duration-300 ${isOpen ? 'w-64' : 'w-10'}`}>
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="self-end p-1 text-warm-brown"
+                className='self-end p-1 bg-tan rounded-xl text-warm-brown'
             >
                 {isOpen ? '←' : '→'}
             </button>
 
             {isOpen && (
-                <div className = 'flex flex-col w-full'>
+                <div className = 'flex flex-col w-full mt-20 items-center justify-center'>
                     {isAuthenticated ? (
-                        <div>
+                        <div className='flex flex-col'>
                             <p>{user?.name}</p>
-                            <button onClick={handleAccountModal}>Account Settings</button>
-                            <button onClick={handleSignOut}>Sign Out</button>
+                            <button onClick={handleAccountModal} className='bg-forest-green hover:bg-deep-green rounded-md'>Account Settings</button>
+                            <button onClick={handleSignOut} className='bg-forest-green hover:bg-deep-green rounded-md'>Sign Out</button>
                         </div>
                 ) : (
-                    <div>
-                        <button onClick={() => handleAuthModal('signin')}>Sign In</button>
-                        <button onClick={() => handleAuthModal('signup')}>Sign Up</button>
+                    <div className='flex flex-col mt-40 items-stretch'>
+                        <h3 className='text-md text-warm-brown'>Returning User? Sign In Here!</h3>
+                        <button onClick={() => handleAuthModal('signin')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg py-2 mb-8'>Sign In</button>
+                        <h3 className='text-md text-warm-brown'>New User? Create an Account!</h3>
+                        <button onClick={() => handleAuthModal('signup')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg py-2 mb-8'>Sign Up</button>
                     </div>
                 )}
                 </div>

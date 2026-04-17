@@ -73,6 +73,8 @@ module.exports = (supabase) => {
           prep_time_minutes: prepTimeValidation.value,
           category: categoryValidation.value
         })
+        .select()
+        .single()
       
       if (error) {
         console.error('Database error creating meal', error);
@@ -142,7 +144,7 @@ module.exports = (supabase) => {
         const validation = validateName(name);
         
         if (!validation.valid) { 
-          return res.status(400).json({ success: false, error: nameValidation.error });
+          return res.status(400).json({ success: false, error: validation.error });
         }
         updatedInformation.name = validation.value;
       }
@@ -156,7 +158,7 @@ module.exports = (supabase) => {
         updatedInformation.ingredients = validation.value;
       }
 
-      if (servings !== unddefined) {
+      if (servings !== undefined) {
         const validation = validateServings(servings);
 
         if (!validation.valid) {
@@ -198,9 +200,9 @@ module.exports = (supabase) => {
 
       const { data, error } = await supabase
         .from('meals')
+        .update(updatedInformation)
         .eq('id', mealID)
         .eq('user_id', userID)
-        .update(updatedInformation)
         .select()
         .single();
       
@@ -262,8 +264,8 @@ module.exports = (supabase) => {
 
       const { data, error } = await supabase
         .from('meals')
-        .select('*')
         .eq('user_id', userID)
+        .select('*')
         .order('category', { ascending: true });
       
         if (error) {
