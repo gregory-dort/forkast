@@ -12,7 +12,7 @@ const Home = () => {
     }
 
     return (
-        <div className = "bg-cream min-h-screen">
+        <div className = "bg-cream min-h-screen mt-24">
             <Hero scrollToSchedule={scrollToSchedule} />
             <main ref={scheduleRef}>
                 <ScheduleCard />

@@ -51,28 +51,28 @@ const SideNavbar = ({ isOpen, setIsOpen }: SideNavbarProps) => {
     if (isLoading) return null;
 
     return (
-        <div ref={sidebarRef} className={`fixed left-0 h-screen shadow-md p-2 z-50 bg-mint mt-4 transition-all duration-300 ${isOpen ? 'w-64' : 'w-10'}`}>
+        <div ref={sidebarRef} className={`fixed left-0 h-screen shadow-md p-2 z-50 bg-mint transition-all duration-300 ${isOpen ? 'w-64' : 'w-10'}`}>
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className='self-end p-1 bg-tan rounded-xl text-warm-brown'
+                className='self-end p-1 bg-forest-green hover:bg-deep-green rounded-xl text-warm-brown'
             >
                 {isOpen ? '←' : '→'}
             </button>
 
             {isOpen && (
-                <div className = 'flex flex-col w-full mt-20 items-center justify-center'>
+                <div className = 'flex flex-col w-full mt-8 items-center justify-center'>
                     {isAuthenticated ? (
                         <div className='flex flex-col'>
                             <p>{user?.name}</p>
-                            <button onClick={handleAccountModal} className='bg-forest-green hover:bg-deep-green rounded-md'>Account Settings</button>
-                            <button onClick={handleSignOut} className='bg-forest-green hover:bg-deep-green rounded-md'>Sign Out</button>
+                            <button onClick={handleAccountModal} className='bg-forest-green hover:bg-deep-green rounded-lg p-2 mb-8'>Account Settings</button>
+                            <button onClick={handleSignOut} className='bg-forest-green hover:bg-deep-green rounded-lg p-2 mb-8'>Sign Out</button>
                         </div>
                 ) : (
                     <div className='flex flex-col mt-40 items-stretch'>
                         <h3 className='text-md text-warm-brown'>Returning User? Sign In Here!</h3>
-                        <button onClick={() => handleAuthModal('signin')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg py-2 mb-8'>Sign In</button>
+                        <button onClick={() => handleAuthModal('signin')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg p-2 mb-8'>Sign In</button>
                         <h3 className='text-md text-warm-brown'>New User? Create an Account!</h3>
-                        <button onClick={() => handleAuthModal('signup')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg py-2 mb-8'>Sign Up</button>
+                        <button onClick={() => handleAuthModal('signup')} className='bg-forest-green hover:bg-deep-green text-warm-brown rounded-lg p-2 mb-8'>Sign Up</button>
                     </div>
                 )}
                 </div>

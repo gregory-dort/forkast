@@ -1,8 +1,8 @@
 const express = require('express');
-const verifyAuth = require('../middleware/auth');
 const { validateName, validateIngredients, validatePrepTime, validateServings, validateCategory, validateInstructions } = require('../validators/mealValidators');
 
 module.exports = (supabase) => {
+  const verifyAuth = require('../middleware/auth')(supabase);
   /*
   These routes handle the CRUD operations for meals. Each route is protected by verifyAuth to make sure only authenticated users can access them. 
 
@@ -103,9 +103,9 @@ module.exports = (supabase) => {
       const { data, error } = await supabase
       .from('meals')
       .delete()
+      .select()
       .eq('id', mealID)
-      .eq('user_id', userID)
-      .select();
+      .eq('user_id', userID);
 
       if (error) {
       console.error('Database error deleting meal', error);
@@ -236,9 +236,9 @@ module.exports = (supabase) => {
 
       const { data, error } = await supabase
         .from('meals')
+        .select()
         .eq('id', mealID)
         .eq('user_id', userID)
-        .select()
         .single();
       
       if (error) {
@@ -264,8 +264,8 @@ module.exports = (supabase) => {
 
       const { data, error } = await supabase
         .from('meals')
-        .eq('user_id', userID)
         .select('*')
+        .eq('user_id', userID)
         .order('category', { ascending: true });
       
         if (error) {

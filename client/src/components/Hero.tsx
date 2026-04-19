@@ -16,19 +16,19 @@ const Hero = ({scrollToSchedule }: HeroProps) => {
     }).format(today);
 
     return (
-        <div className="bg-mint flex flex-row mt-20">
+        <div className="bg-off-white flex flex-row mt-16 p-6">
             <div className="w-1/2 mx-auto px-4">
-                <h1 className="text-4xl font-bold mb-4">Welcome back, {user?.name}</h1>
-                <p className="text-xl mb-8 text-charcoal">Today's date is: {formattedDate}</p>
+                <h1 className="text-4xl font-bold text-warm-brown mb-4">Welcome Back, {user?.name}!</h1>
+                <p className="text-xl mb-8 font-bold text-charcoal">Today's date is: {formattedDate}</p>
             </div>
             <div className='w-1/2 flex flex-col'>
                 {/* Small Meals Card Here */}
-                <div className=''>
+                <div className='container mx-auto py-4 mb-8'>
 
                 </div>
                 {/* Schedule for the current day with a buutton to look at schedule for the week */}
-                <div className=''>
-                    <button onClick={scrollToSchedule} className='bg-forest-green hover:bg-deep-green text-warm-brown py-2 px-4 rounded-md'>
+                <div className='container mx-auto py-4'>
+                    <button onClick={scrollToSchedule} className='bg-forest-green hover:bg-deep-green text-warm-brown py-2 px-4 rounded-md shadow-md'>
                         View Schedule for This Week
                     </button>
                 </div>
